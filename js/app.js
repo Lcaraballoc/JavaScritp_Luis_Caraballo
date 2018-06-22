@@ -1,5 +1,5 @@
  var calculadora = {
-   num1: 0, punto: 0,
+   num1: 0, punto: 0, signo: 0,
 
    clickAbajo : function(i){
      document.getElementById(i).style.transform = "scale(0.9, 0.9)"
@@ -10,11 +10,13 @@
    },
 
    escribir: function(i){
-     if(calculadora.num1 == 0 && calculadora.punto ==0){
-       calculadora.num1 = i;
-       console.log("Este numero es"+calculadora.num1);
-     } else {
-       calculadora.num1+= i;
+     var longitud = calculadora.num1.toString().length;
+      if(longitud< 8){
+       if(calculadora.num1 == 0 && calculadora.punto ==0){
+         calculadora.num1 = i;
+       } else {
+         calculadora.num1+= i;
+       }
      }
      document.getElementById('display').innerHTML =calculadora.num1;
    },
@@ -37,6 +39,13 @@
 
      document.getElementById("sign").addEventListener("mousedown", function(){
         calculadora.clickAbajo("sign");
+
+          calculadora.num1= -calculadora.num1;
+          document.getElementById('display').innerHTML = calculadora.num1;
+          calculadora.signo= 1;
+          console.log("Entro el negativo");
+
+
      })
      document.getElementById("sign").addEventListener("mouseup", function(){
         calculadora.clickArriba("sign");
