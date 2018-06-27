@@ -1,5 +1,5 @@
  var calculadora = {
-   num1: 0, punto: 0, signo: 0,
+   num1: 0, num2:0, punto: 0, signo: 0, operador: 0,
 
    clickAbajo : function(i){
      document.getElementById(i).style.transform = "scale(0.9, 0.9)"
@@ -25,6 +25,26 @@
      calculadora.num1 = 0;
      calculadora.punto = 0;
      document.getElementById('display').innerHTML =calculadora.num1;
+   },
+
+   operacion: function(num1, num2, signo){
+     switch (signo) {
+      case 1:
+          var resultado = num1/num2;
+          break;
+      case 2:
+          var resultado = num1*num2;
+          break;
+      case 3:
+          var resultado = num1-num2;
+          break;
+      case 4:
+          var resultado = parseFloat(num1)+parseFloat(num2);
+          break;
+     }
+    resultado = resultado.toString();
+    resultado = resultado.substring(0,8);
+    return(resultado);
    },
 
    init: function(){
@@ -58,13 +78,6 @@
         calculadora.clickArriba("raiz");
      })
 
-     document.getElementById("dividido").addEventListener("mousedown", function(){
-        calculadora.clickAbajo("dividido");
-     })
-     document.getElementById("dividido").addEventListener("mouseup", function(){
-        calculadora.clickArriba("dividido");
-     })
-
      document.getElementById("7").addEventListener("mousedown", function(){
         calculadora.clickAbajo("7");
         calculadora.escribir("7");
@@ -89,13 +102,6 @@
         calculadora.clickArriba("9");
      })
 
-     document.getElementById("por").addEventListener("mousedown", function(){
-        calculadora.clickAbajo("por");
-     })
-     document.getElementById("por").addEventListener("mouseup", function(){
-        calculadora.clickArriba("por");
-     })
-
      document.getElementById("4").addEventListener("mousedown", function(){
         calculadora.clickAbajo("4");
         calculadora.escribir("4");
@@ -118,13 +124,6 @@
      })
      document.getElementById("6").addEventListener("mouseup", function(){
         calculadora.clickArriba("6");
-     })
-
-     document.getElementById("menos").addEventListener("mousedown", function(){
-        calculadora.clickAbajo("menos");
-     })
-     document.getElementById("menos").addEventListener("mouseup", function(){
-        calculadora.clickArriba("menos");
      })
 
      document.getElementById("1").addEventListener("mousedown", function(){
@@ -179,6 +178,12 @@
 
      document.getElementById("igual").addEventListener("mousedown", function(){
         calculadora.clickAbajo("igual");
+        if(calculadora.operador !=0 ){
+          var total = calculadora.operacion(calculadora.num2, calculadora.num1, calculadora.operador);
+          calculadora.num1 = "";
+          calculadora.punto= 0; calculadora.operador=0;
+          document.getElementById('display').innerHTML =total;
+        }
      })
      document.getElementById("igual").addEventListener("mouseup", function(){
         calculadora.clickArriba("igual");
@@ -186,9 +191,51 @@
 
      document.getElementById("mas").addEventListener("mousedown", function(){
         calculadora.clickAbajo("mas");
+        calculadora.operador = 4;
+        calculadora.num2 = calculadora.num1;
+        calculadora.num1=0;
+        calculadora.punto= 0;
+        document.getElementById('display').innerHTML ="";
      })
      document.getElementById("mas").addEventListener("mouseup", function(){
         calculadora.clickArriba("mas");
+     })
+
+     document.getElementById("menos").addEventListener("mousedown", function(){
+        calculadora.clickAbajo("menos");
+        calculadora.operador = 3;
+        calculadora.num2 = calculadora.num1;
+        calculadora.num1=0;
+        calculadora.punto= 0;
+        document.getElementById('display').innerHTML ="";
+     })
+     document.getElementById("menos").addEventListener("mouseup", function(){
+        calculadora.clickArriba("menos");
+     })
+
+     document.getElementById("por").addEventListener("mousedown", function(){
+        calculadora.clickAbajo("por");
+        calculadora.operador = 2;
+        calculadora.num2 = calculadora.num1;
+        calculadora.num1=0;
+        calculadora.punto= 0;
+        document.getElementById('display').innerHTML ="";
+     })
+     document.getElementById("por").addEventListener("mouseup", function(){
+        calculadora.clickArriba("por");
+
+     })
+
+     document.getElementById("dividido").addEventListener("mousedown", function(){
+        calculadora.clickAbajo("dividido");
+        calculadora.operador = 1;
+        calculadora.num2 = calculadora.num1;
+        calculadora.num1=0;
+        calculadora.punto= 0;
+        document.getElementById('display').innerHTML ="";
+     })
+     document.getElementById("dividido").addEventListener("mouseup", function(){
+        calculadora.clickArriba("dividido");
      })
 
    }
